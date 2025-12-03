@@ -1,13 +1,13 @@
-function LoginPage():React.JSX.Element {
+import { Logo } from '../../components/logo/logo';
+
+function LoginPage(): React.JSX.Element {
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="Rent service logo" width="81" height="41" />
-              </a>
+              <Logo />
             </div>
           </div>
         </div>
