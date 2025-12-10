@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+// src/components/cities-card/cities-card.tsx
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import type{ AppRoute } from '../../const';
 
 type CitiesCardProps = {
   id: string;
@@ -10,16 +10,26 @@ type CitiesCardProps = {
   isPremium: boolean;
   previewImage: string;
   rating: number;
+  onMouseEnter?: (id: string) => void;
+  onMouseLeave?: () => void;
 };
 
-function CitiesCard({ id, title, type, price, previewImage, isPremium, rating }: CitiesCardProps): React.JSX.Element {
-  const [, setOfferId] = useState<string>('');
-
+function CitiesCard({ 
+  id, 
+  title, 
+  type, 
+  price, 
+  previewImage, 
+  isPremium, 
+  rating,
+  onMouseEnter,
+  onMouseLeave 
+}: CitiesCardProps): JSX.Element {
   return (
     <article 
-      className="cities__card place-card" 
-      onMouseOver={() => setOfferId(id)} 
-      onMouseOut={() => setOfferId('')}
+      className="cities__card place-card"
+      onMouseEnter={() => onMouseEnter?.(id)}
+      onMouseLeave={onMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -27,7 +37,8 @@ function CitiesCard({ id, title, type, price, previewImage, isPremium, rating }:
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Offer.replace(':id', id)}`}>
+        {/* ИСПРАВЬТЕ ССЫЛКУ: */}
+        <Link to={`/offer/${id}`}> {/* ← ТАК ЖЕ КАК В FAVORITE-CARD */}
           <img
             className="place-card__image"
             src={previewImage}
@@ -43,6 +54,12 @@ function CitiesCard({ id, title, type, price, previewImage, isPremium, rating }:
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
+          <button className="place-card__bookmark-button button" type="button">
+            <svg className="place-card__bookmark-icon" width="18" height="19">
+              <use xlinkHref="#icon-bookmark"></use>
+            </svg>
+            <span className="visually-hidden">To bookmarks</span>
+          </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -51,9 +68,8 @@ function CitiesCard({ id, title, type, price, previewImage, isPremium, rating }:
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer.replace(':id', id)}`}>
-            {title}
-          </Link>
+          {/* ИСПРАВЬТЕ ССЫЛКУ И ЗДЕСЬ: */}
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -61,4 +77,4 @@ function CitiesCard({ id, title, type, price, previewImage, isPremium, rating }:
   );
 }
 
-export default CitiesCard;
+export { CitiesCard };

@@ -1,78 +1,19 @@
-import type { FullOffer } from '../types/offer';
+import { FullOffer } from '../types/offer';
 
 export const offers: FullOffer[] = [
   {
-    id: 'bbb86a0e-3f92-446d-9a68-cb64b5d38e2b',
-    title: 'Wood and stone place',
-    description: 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
-    type: 'apartment',
-    price: 370,
-    images: [
-      'img/apartment-01.jpg',
-      'img/apartment-02.jpg',
-      'img/apartment-03.jpg',
-      'img/room.jpg',
-      'img/studio-01.jpg',
-      'img/apartment-01.jpg'
-    ],
-    city: {
-      name: 'Paris',
-      location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
-        zoom: 13
-      }
-    },
-    location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
-      zoom: 16
-    },
-    goods: [
-      'Heating',
-      'Wi-Fi',
-      'Fridge',
-      'Laptop friendly workspace',
-      'Baby seat',
-      'Air conditioning',
-      'Washer',
-      'Towels',
-      'Dishwasher',
-      'Kitchen',
-      'Washing machine',
-      'Breakfast',
-      'Coffee machine'
-    ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'img/avatar-angelina.jpg'
-    },
-    isPremium: false,
-    isFavorite: true,
-    rating: 4.9,
-    bedrooms: 2,
-    maxAdults: 3
-  },
-  {
-    id: 'ccc86a0e-3f92-446d-9a68-cb64b5d38e3c',
-    title: 'Beautiful & luxurious studio at great location',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    id: 'offer-1',
+    title: 'Canal view apartment',
+    description: 'Beautiful apartment near the Amsterdam canal.',
     type: 'apartment',
     price: 120,
-    images: [
-      'img/room.jpg',
-      'img/apartment-01.jpg',
-      'img/apartment-02.jpg',
-      'img/apartment-03.jpg',
-      'img/studio-01.jpg'
-    ],
+    images: ['/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg'], // ← использовать существующие файлы
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 13
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12
       }
     },
     location: {
@@ -80,45 +21,57 @@ export const offers: FullOffer[] = [
       longitude: 4.85309666406198,
       zoom: 16
     },
-    goods: [
-      'Wi-Fi',
-      'Washing machine',
-      'Towels',
-      'Heating',
-      'Coffee machine',
-      'Baby seat',
-      'Kitchen',
-      'Dishwasher',
-      'Cabel TV',
-      'Fridge'
-    ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'img/avatar-angelina.jpg'
-    },
+    goods: ['Heating', 'Wi-Fi', 'Kitchen', 'Coffee machine'],
+    host: { name: 'Isaac', avatarUrl: '/img/avatar-angelina.jpg', isPro: true }, // ← добавить /img/
     isPremium: true,
     isFavorite: false,
     rating: 4.8,
-    bedrooms: 3,
-    maxAdults: 4
+    bedrooms: 2,
+    maxAdults: 3
   },
+  
   {
-    id: 'ddd86a0e-3f92-446d-9a68-cb64b5d38e4d',
-    title: 'Canal View Prinsengracht',
-    description: 'Canal view apartment in historical center.',
-    type: 'apartment',
-    price: 132,
-    images: [
-      'img/apartment-02.jpg',
-      'img/apartment-03.jpg'
-    ],
+    id: 'offer-2',
+    title: 'Cozy studio in Amsterdam',
+    description: 'Perfect for a short stay in the city center.',
+    type: 'room',
+    price: 80,
+    images: ['/img/room.jpg', '/img/studio-01.jpg'], // ← использовать room.jpg вместо apartment-01.jpg
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 13
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12
+      }
+    },
+    location: {
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 16
+    },
+    goods: ['Wi-Fi', 'Heating'],
+    host: { name: 'Tom', avatarUrl: '/img/avatar-max.jpg', isPro: false }, // ← avatar-max.jpg вместо avatar-tom.jpg
+    isPremium: false,
+    isFavorite: true,
+    rating: 4.6,
+    bedrooms: 1,
+    maxAdults: 2
+  },
+
+  {
+    id: 'offer-3',
+    title: 'Modern loft near park',
+    description: 'Stylish loft near a quiet Amsterdam park.',
+    type: 'apartment',
+    price: 150,
+    images: ['/img/apartment-03.jpg'], // ← добавить /img/
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12
       }
     },
     location: {
@@ -126,67 +79,41 @@ export const offers: FullOffer[] = [
       longitude: 4.929309666406198,
       zoom: 16
     },
-    goods: [
-      'Wi-Fi',
-      'Kitchen',
-      'Dishwasher',
-      'Fridge',
-      'Heating'
-    ],
-    host: {
-      isPro: true,
-      name: 'Oliver',
-      avatarUrl: 'img/avatar-angelina.jpg'
-    },
+    goods: ['Wi-Fi', 'Kitchen', 'Washer'],
+    host: { name: 'Anna', avatarUrl: '/img/avatar-angelina.jpg', isPro: true },
     isPremium: false,
-    isFavorite: true,
-    rating: 4.2,
-    bedrooms: 2,
-    maxAdults: 3
+    isFavorite: false,
+    rating: 4.7,
+    bedrooms: 1,
+    maxAdults: 2
   },
+
   {
-    id: 'eee86a0e-3f92-446d-9a68-cb64b5d38e5e',
-    title: 'Nice, cozy, warm big bed apartment',
-    description: 'Premium apartment with big bed and great view.',
-    type: 'apartment',
-    price: 180,
-    images: [
-      'img/apartment-03.jpg',
-      'img/apartment-01.jpg'
-    ],
+    id: 'offer-4',
+    title: 'Spacious house with garden',
+    description: 'Large house ideal for family stays.',
+    type: 'house',
+    price: 220,
+    images: ['/img/apartment-03.jpg'], // ← добавить /img/
     city: {
-      name: 'Brussels',
+      name: 'Amsterdam',
       location: {
-        latitude: 50.846557,
-        longitude: 4.351697,
-        zoom: 13
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 12
       }
     },
     location: {
-      latitude: 50.850557,
-      longitude: 4.361697,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
-    goods: [
-      'Wi-Fi',
-      'Washing machine',
-      'Towels',
-      'Heating',
-      'Coffee machine',
-      'Kitchen',
-      'Dishwasher',
-      'Fridge',
-      'Air conditioning'
-    ],
-    host: {
-      isPro: true,
-      name: 'Angelina',
-      avatarUrl: 'img/avatar-angelina.jpg'
-    },
+    goods: ['Heating', 'Dishwasher', 'Washer', 'Wi-Fi'],
+    host: { name: 'Max', avatarUrl: '/img/avatar-max.jpg', isPro: false },
     isPremium: true,
     isFavorite: true,
-    rating: 5.0,
-    bedrooms: 4,
-    maxAdults: 6
+    rating: 4.9,
+    bedrooms: 3,
+    maxAdults: 5
   }
 ];

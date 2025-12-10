@@ -1,20 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { Setting } from './const';
+import { store } from './store';
 import { offers } from './mocks/offers';
-import { offersList } from './mocks/offers-list';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const container = document.getElementById('root') as HTMLElement;
+const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <App
-      rentalOffersCount={Setting.rentOffersCount}
-      offersList={offersList}
-      offers={offers}
-    />
+    <Provider store={store}>
+      <App offers={offers} />
+    </Provider>
   </React.StrictMode>
 );
