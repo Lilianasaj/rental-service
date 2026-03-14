@@ -1,0 +1,372 @@
+openapi: 3.0.0
+info:
+  title: Housing Rental API
+  version: 1.0.0
+  description: API для работы с предложениями, отзывами и пользователями
+servers:
+  - url: http://localhost:5000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        username:
+          type: string
+        avatarUrl:
+          type: string
+        isPro:
+          type: boolean
+    Offer:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        city:
+          type: string
+        price:
+          type: number
+        rating:
+          type: number
+        type:
+          type: string
+        isPremium:
+          type: boolean
+        isFavorite:
+          type: boolean
+        previewImage:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        comment:
+          type: string
+        rating:
+          type: number
+        date:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/User"
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+tags:
+  - name: Users
+  - name: Offers
+  - name: Reviews
+paths:
+  /login:
+    post:
+      tags:
+        - Users
+      summary: Авторизация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+            example:
+              email: Trinity.Harvey@hotmail.com
+              password: 6fDULjNlS_
+      responses:
+        "200":
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Неверные учетные данные
+  /offers:
+    get:
+      tags:
+        - Offers
+      summary: Получить все предложения
+      responses:
+        "200":
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+  /offer:
+    post:
+      summary: Создание нового предложения
+      description: >
+        Создает новое предложение (offer). Принимает данные в формате
+        multipart/form-data. Поле previewImage обязательно. Поле photos — массив
+        из 6 файлов.
+      tags:
+        - Offers
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - city
+                - price
+                - rooms
+                - guests
+                - previewImage
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                publishDate:
+                  type: string
+                  format: date
+                city:
+                  type: string
+                isPremium:
+                  type: boolean
+                isFavorite:
+                  type: boolean
+                rating:
+                  type: number
+                type:
+                  type: string
+                rooms:
+                  type: integer
+                guests:
+                  type: integer
+                price:
+                  type: number
+                features:
+                  type: string
+                  description: JSON-строка массива из значений 'Breakfast', 'Air conditioning',
+                    'Laptop friendly workspace', 'Baby seat', 'Washer',
+                    'Towels', 'Fridge'
+                commentsCount:
+                  type: integer
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+                userId:
+                  type: integer
+                previewImage:
+                  type: string
+                  format: binary
+                  description: Основное изображение (обязательно)
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Дополнительные изображения
+            examples:
+              generated:
+                summary: Сгенерированный пример (только текстовые поля)
+                value:
+                  title: dolorum solio thesis
+                  description: Decimus agnosco cetera vestigium sumptus vinitor allatus ab vix
+                    beatus. Verbera adiuvo utroque decumbo minus tempus.
+                    Cupiditas vestrum uredo aut deficio stultus stips.
+                  publishDate: 2026-03-14
+                  city: Mylenechester
+                  isPremium: false
+                  isFavorite: true
+                  rating: 3.4
+                  type: room
+                  rooms: 4
+                  guests: 6
+                  price: 84
+                  features: '["Breakfast","Air conditioning","Laptop friendly workspace","Baby
+                    seat","Washer","Towels","Fridge"]'
+                  commentsCount: 50
+                  latitude: 47.3905
+                  longitude: 133.479
+                  userId: 5
+      responses:
+        "201":
+          description: Предложение успешно создано
+        "400":
+          description: Ошибка валидации данных
+        "401":
+          description: Не авторизован
+  /favorite:
+    get:
+      tags:
+        - Offers
+      summary: Получить избранные предложения
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Список избранных предложений
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+  /favorite/{offerId}/{status}:
+    post:
+      tags:
+        - Offers
+      summary: Добавить/удалить предложение из избранного
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+      responses:
+        "200":
+          description: Статус обновлен
+  /comments/{offerId}:
+    get:
+      tags:
+        - Reviews
+      summary: Получить отзывы для предложения
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Список отзывов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+    post:
+      tags:
+        - Reviews
+      summary: Добавить отзыв к предложению
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - comment
+                - rating
+              properties:
+                comment:
+                  type: string
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+            example:
+              comment: Valeo decumbo temptatio velut deduco conventus. Quaerat corpus
+                attonbitus asperiores volup alo adversus comes attonbitus.
+                Tumultus numquam derelinquo.
+              rating: 2
+      responses:
+        "201":
+          description: Отзыв успешно создан
+  /register:
+    post:
+      tags:
+        - Users
+      summary: Регистрация нового пользователя
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+                - userType
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                userType:
+                  type: string
+                  enum:
+                    - normal
+                    - pro
+                avatar:
+                  type: string
+                  format: binary
+            example:
+              username: Nelson10
+              email: Monica8@hotmail.com
+              password: CnD0HJp14e
+              userType: normal
+      responses:
+        "201":
+          description: Пользователь успешно зарегистрирован
+  /logout:
+    post:
+      tags:
+        - Users
+      summary: Выход из системы
+      security:
+        - bearerAuth: []
+      responses:
+        "204":
+          description: Успешный выход

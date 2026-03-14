@@ -9,6 +9,8 @@ import { Review } from './models/review.js';
 import { User } from './models/user.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 dotenv.config();
 
@@ -23,6 +25,9 @@ app.use(cors());
 app.use(express.json());                   
 app.use(express.urlencoded({ extended: true })); 
 app.use('/static', express.static(path.resolve(__dirname, 'static'))); 
+
+const swaggerDocument = YAML.load('../docs/swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/', router);                     
 
