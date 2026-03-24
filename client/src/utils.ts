@@ -6,7 +6,7 @@ import { SortOffer } from './types/sort';
 export function getCity(cityName: string, cities: readonly CityOffer[]): CityOffer {
   const foundCity = cities.find((city) => city.name === cityName);
   if (!foundCity) {
-    return cities[0]; // Возвращаем первый город как дефолтный
+    return cities[0];
   }
   return foundCity;
 }
@@ -21,7 +21,7 @@ export function getOffersByCity(cityName: string | undefined, offers: OffersList
 
 // Сортировка предложений
 export function sortOffersByType(offers: OffersList[], type: SortOffer): OffersList[] {
-  const sortedOffers = [...offers]; // Создаем копию, чтобы не мутировать оригинал
+  const sortedOffers = [...offers];
   
   switch (type) {
     case 'PriceToHigh':
