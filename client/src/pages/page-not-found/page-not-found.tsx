@@ -16,7 +16,7 @@ function NotFoundPage(): JSX.Element {
       </header>
 
       <main className="page__main container" style={{ paddingTop: '40px' }}>
-        <h1>404. Страница не найдена</h1>
+        <h1>PAGE NOT FOUND</h1>
         <p>Извините, такой страницы не существует.</p>
 
         <Link
@@ -28,7 +28,7 @@ function NotFoundPage(): JSX.Element {
             color: '#4481c3',
           }}
         >
-          Вернуться на главную страницу
+          Перейдите на главную страницу
         </Link>
       </main>
     </div>

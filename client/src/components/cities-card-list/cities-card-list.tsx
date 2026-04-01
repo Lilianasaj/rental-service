@@ -19,6 +19,7 @@ function CitiesCardList({ offersList, onMouseEnter, onMouseLeave }: CitiesCardLi
           price={offer.price}
           previewImage={offer.previewImage}
           isPremium={offer.isPremium}
+          isFavorite={offer.isFavorite}
           rating={offer.rating}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}

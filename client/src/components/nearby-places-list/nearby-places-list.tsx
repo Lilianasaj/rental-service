@@ -17,6 +17,7 @@ function NearbyPlacesList({ offers }: NearbyPlacesListProps): JSX.Element {
           price={offer.price}
           previewImage={offer.previewImage}
           isPremium={offer.isPremium}
+          isFavorite={offer.isFavorite}
           rating={offer.rating}
         />
       ))}

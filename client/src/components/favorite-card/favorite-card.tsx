@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FavoriteButton } from '../favorite-button/favorite-button';
 
 type FavoriteCardProps = {
   id: string;
@@ -8,9 +9,10 @@ type FavoriteCardProps = {
   previewImage: string;
   rating: number;
   isPremium: boolean;
+  isFavorite: boolean;
 };
 
-function FavoriteCard({ id, title, type, price, previewImage, rating, isPremium }: FavoriteCardProps) {
+function FavoriteCard({ id, title, type, price, previewImage, rating, isPremium, isFavorite }: FavoriteCardProps) {
   return (
     <article className="favorites__card place-card">
 
@@ -38,6 +40,7 @@ function FavoriteCard({ id, title, type, price, previewImage, rating, isPremium 
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
+          <FavoriteButton offerId={id} isFavorite={isFavorite} />
         </div>
 
         <div className="place-card__rating rating">

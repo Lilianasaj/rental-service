@@ -38,7 +38,7 @@ function HeaderUserNav({
         </Link>
       </li>
       <li className="header__nav-item">
-        <button className="header__nav-link" type="button" onClick={onLogout}>
+        <button className="header__nav-link button" type="button" onClick={onLogout}>
           <span className="header__signout">Sign out</span>
         </button>
       </li>

@@ -16,6 +16,7 @@ import {
   setReviews,
   setReviewSendingStatus,
   setUserData,
+  updateOfferFavoriteStatus,
 } from './action';
 import { AuthorizationStatus, CITIES_LOCATION } from '../const';
 import { AuthorizationStatusType } from '../types/authorization-status';
@@ -65,6 +66,24 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
+    })
+    .addCase(updateOfferFavoriteStatus, (state, action) => {
+      const { offerId, isFavorite } = action.payload;
+
+      state.offers = state.offers.map((offer) => (
+        offer.id === offerId ? { ...offer, isFavorite } : offer
+      ));
+
+      state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== offerId);
+
+      const favoriteOffer = state.offers.find((offer) => offer.id === offerId);
+      if (isFavorite && favoriteOffer) {
+        state.favoriteOffers.unshift({ ...favoriteOffer, isFavorite: true });
+      }
+
+      if (state.currentOffer?.id === offerId) {
+        state.currentOffer = { ...state.currentOffer, isFavorite };
+      }
     })
     .addCase(setCurrentOffer, (state, action) => {
       state.currentOffer = action.payload;

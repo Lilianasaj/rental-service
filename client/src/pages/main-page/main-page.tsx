@@ -35,6 +35,7 @@ function MainPage(): JSX.Element {
 
   const selectedCityOffers = getOffersByCity(selectedCity?.name, allOffers);
   const sortedOffers = sortOffersByType(selectedCityOffers, activeSort);
+  const isOffersEmpty = sortedOffers.length === 0;
   const selectedOffer = selectedOfferId
     ? allOffers.find((offer) => offer.id === selectedOfferId)
     : undefined;
@@ -71,7 +72,7 @@ function MainPage(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index${isOffersEmpty ? ' page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -79,27 +80,43 @@ function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {sortedOffers.length} places to stay in {selectedCity?.name}
-              </b>
-              <SortOptions activeSorting={activeSort} onChange={setActiveSort} />
-              <CitiesCardList
-                offersList={sortedOffers}
-                onMouseEnter={handleCardHover}
-                onMouseLeave={handleCardLeave}
-              />
-            </section>
-            <div className="cities__right-section">
-              <Map
-                className="cities__map"
-                city={selectedCity!}
-                points={selectedCityOffers}
-                selectedPoint={selectedOffer}
-              />
-            </div>
+          <div className={`cities__places-container container${isOffersEmpty ? ' cities__places-container--empty' : ''}`}>
+            {isOffersEmpty ? (
+              <>
+                <section className="cities__no-places">
+                  <div className="cities__status-wrapper tabs__content">
+                    <b className="cities__status">No places to stay available</b>
+                    <p className="cities__status-description">
+                      We could not find any property available at the moment in {selectedCity?.name}
+                    </p>
+                  </div>
+                </section>
+                <div className="cities__right-section"></div>
+              </>
+            ) : (
+              <>
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">
+                    {sortedOffers.length} places to stay in {selectedCity?.name}
+                  </b>
+                  <SortOptions activeSorting={activeSort} onChange={setActiveSort} />
+                  <CitiesCardList
+                    offersList={sortedOffers}
+                    onMouseEnter={handleCardHover}
+                    onMouseLeave={handleCardLeave}
+                  />
+                </section>
+                <div className="cities__right-section">
+                  <Map
+                    className="cities__map"
+                    city={selectedCity!}
+                    points={selectedCityOffers}
+                    selectedPoint={selectedOffer}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </main>

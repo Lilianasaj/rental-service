@@ -62,13 +62,6 @@ function LoginPage(): JSX.Element {
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
-          <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
-              </Link>
-            </div>
-          </section>
         </div>
       </main>
     </div>

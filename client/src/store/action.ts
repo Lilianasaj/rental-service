@@ -13,6 +13,7 @@ export const offersCityList = createAction('offers/offersCityList', (offers: Off
 }));
 
 export const setFavoriteOffers = createAction<OffersList[]>('favorite/setFavoriteOffers');
+export const updateOfferFavoriteStatus = createAction<{ offerId: string; isFavorite: boolean }>('favorite/updateOfferFavoriteStatus');
 export const setCurrentOffer = createAction<FullOffer | null>('offer/setCurrentOffer');
 export const setOfferNotFoundStatus = createAction<boolean>('offer/setOfferNotFoundStatus');
 export const setReviews = createAction<Review[]>('reviews/setReviews');

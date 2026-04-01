@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 
 import { CitiesCard } from '../components/cities-card/cities-card';
 import { makeFakeOffer } from './mocks';
+import { renderWithProviders } from './render-with-providers';
 
 function renderCitiesCard(isPremium = false) {
   const offer = {
@@ -11,18 +11,17 @@ function renderCitiesCard(isPremium = false) {
     isPremium,
   };
 
-  render(
-    <MemoryRouter>
-      <CitiesCard
-        id={offer.id}
-        title={offer.title}
-        type={offer.type}
-        price={offer.price}
-        isPremium={offer.isPremium}
-        previewImage={offer.previewImage}
-        rating={offer.rating}
-      />
-    </MemoryRouter>
+  renderWithProviders(
+    <CitiesCard
+      id={offer.id}
+      title={offer.title}
+      type={offer.type}
+      price={offer.price}
+      isPremium={offer.isPremium}
+      isFavorite={offer.isFavorite}
+      previewImage={offer.previewImage}
+      rating={offer.rating}
+    />
   );
 
   return offer;

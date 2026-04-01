@@ -47,6 +47,7 @@ function FavoriteCardList({ offersList }: FavoriteCardListProps): JSX.Element {
                 previewImage={offer.previewImage}
                 isPremium={offer.isPremium}
                 rating={offer.rating}
+                isFavorite={offer.isFavorite}
               />
             ))}
           </div>

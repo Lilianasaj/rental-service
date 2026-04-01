@@ -24,4 +24,5 @@ router.post('/offers', upload.fields([
     { name: 'photos', maxCount: 6 }
 ]), createOffer);
 
+
 export default router;

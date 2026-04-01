@@ -36,8 +36,19 @@ function SortOptions({ activeSorting, onChange }: SortOptionsProps): JSX.Element
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0} onClick={typeClickHandler}>
         {SortOffersType[activeSorting]}
-        <svg className="places__sorting-arrow" width={7} height={4} style={iconStyle}>
-          <use xlinkHref="#icon-arrow-select"></use>
+        <svg
+          className="places__sorting-arrow"
+          width={7}
+          height={4}
+          viewBox="0 0 7 4"
+          style={iconStyle}
+          aria-hidden="true"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0 0l3.5 2.813L7 0v1.084L3.5 4 0 1.084V0z"
+          />
         </svg>
       </span>
       <ul

@@ -1,5 +1,4 @@
 import { CityOffer, OffersList } from './types/offer';
-import { SortOffersType } from './const';
 import { SortOffer } from './types/sort';
 
 // Получить город по имени

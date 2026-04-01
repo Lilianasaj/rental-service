@@ -10,6 +10,7 @@ import {
   setError,
   setFavoriteOffers,
   setFavoritesDataLoadingStatus,
+  updateOfferFavoriteStatus,
   setOfferDataLoadingStatus,
   setOfferNotFoundStatus,
   setOffersDataLoadingStatus,
@@ -66,6 +67,26 @@ export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
       return rejectWithValue('Failed to fetch favorite offers');
     } finally {
       dispatch(setFavoritesDataLoadingStatus(false));
+    }
+  },
+);
+
+
+export const toggleFavoriteStatusAction = createAsyncThunk<void, { offerId: string; status: 0 | 1 }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/toggleFavoriteStatus',
+  async ({ offerId, status }, { dispatch, extra: api, rejectWithValue }) => {
+    try {
+      const { data } = await api.post<OffersList>(`${APIRoute.Favorite}/${offerId}/${status}`);
+      dispatch(updateOfferFavoriteStatus({ offerId, isFavorite: data.isFavorite }));
+      await dispatch(fetchFavoriteOffersAction());
+    } catch {
+      dispatch(setError('Не удалось обновить избранное'));
+      dispatch(clearErrorAction());
+      return rejectWithValue('Failed to toggle favorite status');
     }
   },
 );

@@ -38,10 +38,18 @@ export function makeFakeOffer(): OffersList {
 }
 
 export function makeFakeFullOffer(): FullOffer {
-  const { previewImage: _previewImage, ...offer } = makeFakeOffer();
+  const offer = makeFakeOffer();
 
   return {
-    ...offer,
+    id: offer.id,
+    title: offer.title,
+    type: offer.type,
+    price: offer.price,
+    city: offer.city,
+    location: offer.location,
+    isFavorite: offer.isFavorite,
+    isPremium: offer.isPremium,
+    rating: offer.rating,
     description: faker.lorem.paragraph(),
     bedrooms: faker.number.int({ min: 1, max: 5 }),
     goods: [faker.commerce.productName(), faker.commerce.productName()],

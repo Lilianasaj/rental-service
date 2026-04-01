@@ -9,8 +9,9 @@ import { Map } from '../../components/map/map';
 import { NearbyPlacesList } from '../../components/nearby-places-list/nearby-places-list';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { HeaderUserNav } from '../../components/header-user-nav/header-user-nav';
+import { FavoriteButton } from '../../components/favorite-button/favorite-button';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { addReviewAction, fetchOfferPageDataAction, logoutAction } from '../../store/api-actions';
+import { addReviewAction, fetchOfferPageDataAction, fetchOffersAction, logoutAction } from '../../store/api-actions';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -31,6 +32,12 @@ function OfferPage(): JSX.Element {
       dispatch(fetchOfferPageDataAction(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (offers.length === 0) {
+      dispatch(fetchOffersAction());
+    }
+  }, [dispatch, offers.length]);
 
   if (!id || isOfferNotFound) {
     return <Navigate to={AppRoute.NotFound} />;
@@ -101,6 +108,7 @@ function OfferPage(): JSX.Element {
               <div className="offer__wrapper">
                 <div className="offer__name-wrapper">
                   <h1 className="offer__name">{offer.title}</h1>
+                  <FavoriteButton offerId={offer.id} isFavorite={offer.isFavorite} variant="offer" />
                 </div>
 
                 <div className="offer__rating rating">
@@ -123,7 +131,7 @@ function OfferPage(): JSX.Element {
                 </div>
 
                 <div className="offer__inside">
-                  <h2 className="offer__inside-title">What's inside</h2>
+                  <h2 className="offer__inside-title">What&apos;s inside</h2>
                   <ul className="offer__inside-list">
                     {offer.goods.map((good) => (
                       <li key={good} className="offer__inside-item">{good}</li>
